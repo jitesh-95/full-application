@@ -23,7 +23,7 @@ export const reducer = (state = initialState, { type, payload }) => {
     case GET_BOOKS_SUCCESS: {
       return {
         ...state,
-        books: [...state.books, ...payload],
+        books: payload,
         isLoading: false,
         isError: false,
       };
@@ -46,18 +46,21 @@ export const reducer = (state = initialState, { type, payload }) => {
       return { ...state };
     }
     //sorting case
-    case INCREASING_BOOKS: {
-      return {
-        ...state,
-        books: state.books.sort((a, b) => a.release_year - b.release_year),
-      };
-    }
-    case DECREASING_BOOKS: {
-      return {
-        ...state,
-        books: state.books.sort((a, b) => b.release_year - a.release_year),
-      };
-    }
+    // case INCREASING_BOOKS: {
+    //   // console.log(state.books);
+    //   let newBooks = [...state.books]
+    //   return {
+    //     ...state,
+    //     books: newBooks.sort((a, b) => a.release_year - b.release_year),
+    //   };
+    // }
+    // case DECREASING_BOOKS: {
+    //   let newBooks = [...state.books]
+    //   return {
+    //     ...state,
+    //     books: newBooks.sort((a, b) => b.release_year - a.release_year),
+    //   };
+    // }
     default: {
       return state;
     }

@@ -13,7 +13,7 @@ import axios from "axios";
 //parent function
 export const getBooks = (params) => (dispatch) => {
   dispatch({ type: GET_BOOKS_REQUEST });
-  axios
+  return axios
     .get(`http://localhost:8080/books`, params)
     .then((r) => dispatch({ type: GET_BOOKS_SUCCESS, payload: r.data }))
     .catch((err) => dispatch({ type: GET_BOOKS_FAILURE, payload: err }));
@@ -41,7 +41,6 @@ export const addBooksAPI = (params) => (dispatch) => {
     .catch((err) => dispatch(addBooksError(err)));
 };
 
-
 //sorting function
-export const increasingBooks = ()=>({type:INCREASING_BOOKS})
-export const decreasingBooks = ()=>({type:DECREASING_BOOKS})
+// export const increasingBooks = () => ({ type: INCREASING_BOOKS });
+// export const decreasingBooks = () => ({ type: DECREASING_BOOKS });

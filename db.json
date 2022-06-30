@@ -2,10 +2,10 @@
   "books": [
     {
       "id": 1,
-      "author": "philips",
+      "author": "jojo",
       "no_of_chapter": 6,
       "cover_photo": "https://thumbs.dreamstime.com/b/library-many-shelves-books-library-many-shelves-books-diminishing-perspective-shallow-dof-159717386.jpg",
-      "book_name": "Rich dad Poor dad",
+      "book_name": "kamapachi",
       "category": "Novel",
       "release_year": 2019,
       "chapter": [

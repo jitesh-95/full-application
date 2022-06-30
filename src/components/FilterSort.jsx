@@ -3,17 +3,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { decreasingBooks, getBooks, increasingBooks } from "../Redux/action";
+import { getBooks } from "../Redux/action";
 
 const FilterSort = () => {
   const dispatch = useDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-
+  const urlSort = searchParams.get("sortBy");
   const urlCategory = searchParams.getAll("category");
 
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState(urlSort || "");
   const [category, setCategory] = useState(urlCategory || []);
 
   //filtering
@@ -31,40 +31,29 @@ const FilterSort = () => {
   };
 
   useEffect(() => {
-    if (category) {
+    if (category || sortBy) {
       let params = {};
       category && (params.category = category);
       sortBy && (params.sortBy = sortBy);
       setSearchParams(params);
       // dispatch(getBooks({ params: { category } }));
     }
-  }, [category, searchParams, dispatch]);
+  }, [category, searchParams, sortBy]);
 
   //sorting
   const handleSort = (e) => {
     let radioValue = e.target.value;
     setSortBy(radioValue);
-
-    if (radioValue === "asc") {
-      dispatch(increasingBooks());
-    } else if (radioValue === "desc") {
-      dispatch(decreasingBooks());
-    }
   };
 
-
-  useEffect(() => {
-    if (sortBy) {
-      const params = {
-        category: searchParams.getAll("category"),
-        sortBy,
-      };
-
-      setSearchParams(params);
-
-      // dispatch(getBooks({ params: getBooksParams }));
+  //reseting
+  const handleReset = () => {
+    if (category || sortBy) {
+      setSortBy("");
+      setCategory([]);
+      dispatch(getBooks());
     }
-  }, [sortBy, searchParams]);
+  };
 
   return (
     <div
@@ -82,7 +71,7 @@ const FilterSort = () => {
           <input
             type="checkbox"
             value="Novel"
-            defaultChecked={category.includes("Novel")}
+            checked={category.includes("Novel")}
             onChange={handleChange}
           />
           <label>Novel</label>
@@ -91,7 +80,7 @@ const FilterSort = () => {
           <input
             type="checkbox"
             value="Thriller"
-            defaultChecked={category.includes("Thriller")}
+            checked={category.includes("Thriller")}
             onChange={handleChange}
           />
           <label>Thriller</label>
@@ -100,7 +89,7 @@ const FilterSort = () => {
           <input
             type="checkbox"
             value="Coventional"
-            defaultChecked={category.includes("Coventional")}
+            checked={category.includes("Coventional")}
             onChange={handleChange}
           />
           <label>Coventional</label>
@@ -109,7 +98,7 @@ const FilterSort = () => {
           <input
             type="checkbox"
             value="Fiction"
-            defaultChecked={category.includes("Fiction")}
+            checked={category.includes("Fiction")}
             onChange={handleChange}
           />
           <label>Fiction</label>
@@ -117,21 +106,27 @@ const FilterSort = () => {
       </div>
 
       <h3>Sort</h3>
-      <div onChange={handleSort}>
+      <div>
         <input
           type="radio"
           value="asc"
           name="soryBy"
-          defaultChecked={sortBy === "asc"}
+          checked={sortBy === "asc"}
+          onChange={handleSort}
         />
         <label>By Inc Year</label> <br />
         <input
           type="radio"
           value="desc"
           name="soryBy"
-          defaultChecked={sortBy === "desc"}
+          checked={sortBy === "desc"}
+          onChange={handleSort}
         />
         <label>By Dec Year</label>
+      </div>
+      <br />
+      <div>
+        <button onClick={handleReset}>Reset Filter</button>
       </div>
     </div>
   );

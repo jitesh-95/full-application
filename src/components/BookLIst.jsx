@@ -20,14 +20,17 @@ const BookLIst = () => {
       const getBooksParams = {
         params: {
           category: searchParams.getAll("category"),
-          // _sort: sortBy && "release_year",
-          // _order: sortBy,
+          _sort: sortBy && "release_year",
+          _order: sortBy,
         },
       };
+      dispatch(getBooks(getBooksParams));
 
+      //if deselect all filter
+    } else if (location.search === "") {
       dispatch(getBooks());
     }
-  }, []);
+  }, [location.search]);
   return (
     <div
       style={{
